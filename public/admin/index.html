@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>لوحة تحكم صاحب المحل | Admin Dashboard</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+  <!-- Admin Login Screen (Protected Access) -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+      <div class="login-icon">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <h2>لوحة تحكم صاحب المحل</h2>
+      <p>يرجى إدخال رمز المرور السري للدخول إلى الإدارة</p>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <input type="password" id="admin-pin-input" placeholder="رمز المرور (الافتراضي: admin123)" required autofocus>
+        </div>
+        <button type="submit" id="login-submit-btn" class="btn btn-primary btn-block">
+          <i class="fa-solid fa-right-to-bracket"></i> دخول للوحة التحكم
+        </button>
+      </form>
+      <div id="login-error" class="login-error" style="display: none;"></div>
+      <a href="/" class="back-to-store-link"><i class="fa-solid fa-arrow-right"></i> العودة للمتجر</a>
+    </div>
+  </div>
+
+  <!-- Main Admin Dashboard Wrapper -->
+  <div id="admin-app" class="admin-app" style="display: none;">
+
+    <!-- Top Admin Header -->
+    <header class="admin-header">
+      <div class="header-left">
+        <div class="admin-brand">
+          <div class="admin-logo-box">
+            <img id="admin-brand-logo" src="" alt="Logo" style="display: none;">
+            <i class="fa-solid fa-shirt" id="admin-brand-icon"></i>
+          </div>
+          <div>
+            <h1 id="admin-store-name">لوحة التحكم</h1>
+            <span class="live-pill"><span class="live-dot"></span> متصل مباشرة</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <a href="/" target="_blank" class="btn btn-outline-dark" title="معاينة المتجر">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> <span class="hide-mobile">معاينة المتجر</span>
+        </a>
+        <button id="logout-btn" class="btn btn-danger-soft" title="تسجيل الخروج">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span class="hide-mobile">خروج</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="admin-nav">
+      <div class="container nav-tabs-container">
+        <button class="nav-tab active" data-tab="orders">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span>الطلبات والأوردرات</span>
+          <span id="orders-badge-count" class="tab-badge">0</span>
+        </button>
+
+        <button class="nav-tab" data-tab="products">
+          <i class="fa-solid fa-tags"></i>
+          <span>إدارة المنتجات</span>
+          <span id="products-badge-count" class="tab-badge">0</span>
+        </button>
+
+        <button class="nav-tab" data-tab="add-product">
+          <i class="fa-solid fa-circle-plus"></i>
+          <span>إضافة منتج جديد</span>
+        </button>
+
+        <button class="nav-tab" data-tab="settings">
+          <i class="fa-solid fa-sliders"></i>
+          <span>إعدادات المحل واللوجو</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Container Content -->
+    <main class="container admin-main-content">
+
+      <!-- ==================== TAB 1: ORDERS ==================== -->
+      <section id="tab-orders" class="admin-tab-pane active">
+        <div class="pane-header">
+          <div>
+            <h2>طلبات الزبائن الواردة</h2>
+            <p>الطلبات الجديدة تظهر هنا لحظياً. عند الضغط على "تسليم الأوردر"، يختفي الطلب فوراً من القائمة.</p>
+          </div>
+          <div class="orders-toolbar">
+            <button id="refresh-orders-btn" class="btn btn-outline-dark btn-sm">
+              <i class="fa-solid fa-arrows-rotate"></i> تحديث الطلبات
+            </button>
+          </div>
+        </div>
+
+        <!-- Orders Stats Banner -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-icon bg-blue"><i class="fa-solid fa-clock"></i></div>
+            <div class="stat-info">
+              <span class="stat-label">أوردرات قيد الانتظار</span>
+              <strong id="stat-pending-orders" class="stat-value">0</strong>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon bg-green"><i class="fa-solid fa-sack-dollar"></i></div>
+            <div class="stat-info">
+              <span class="stat-label">إجمالي قيمة الطلبات المعلقة</span>
+              <strong id="stat-pending-revenue" class="stat-value">0 ج.م</strong>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon bg-purple"><i class="fa-solid fa-shirt"></i></div>
+            <div class="stat-info">
+              <span class="stat-label">إجمالي المنتجات بالمتجر</span>
+              <strong id="stat-total-products" class="stat-value">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders List Container -->
+        <div id="orders-list-container" class="orders-list">
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <p>جاري تحميل الطلبات...</p>
+          </div>
+        </div>
+
+        <!-- Empty Orders State -->
+        <div id="orders-empty-state" class="empty-state-panel" style="display: none;">
+          <i class="fa-solid fa-circle-check"></i>
+          <h3>لا توجد طلبات جديدة حالياً!</h3>
+          <p>جميع الطلبات تم تسليمها بنجاح. أي أوردر جديد سيظهر هنا فوراً مع تنبيه صوتي.</p>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 2: PRODUCTS LIST ==================== -->
+      <section id="tab-products" class="admin-tab-pane">
+        <div class="pane-header">
+          <div>
+            <h2>جميع منتجات المتجر</h2>
+            <p>يمكنك حذف أي منتج أو تعديل بياناته وأسعاره وصوره.</p>
+          </div>
+          <button class="btn btn-primary" onclick="switchTab('add-product')">
+            <i class="fa-solid fa-plus"></i> إضافة منتج جديد
+          </button>
+        </div>
+
+        <!-- Products Filter Bar -->
+        <div class="products-filter-bar">
+          <div class="admin-search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="admin-product-search" placeholder="ابحث عن منتج بالاسم...">
+          </div>
+          <div class="admin-cat-filter">
+            <select id="admin-product-cat-filter">
+              <option value="all">كل الأقسام</option>
+              <option value="hoodies">🧥 هودي</option>
+              <option value="pants">👖 بناطيل</option>
+              <option value="shirts">👔 قمصان</option>
+              <option value="tshirts">👕 تيشيرتات</option>
+              <option value="jackets">🧥 جواكت</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Products Table / Cards List -->
+        <div id="admin-products-container" class="admin-products-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+      <!-- ==================== TAB 3: ADD PRODUCT ==================== -->
+      <section id="tab-add-product" class="admin-tab-pane">
+        <div class="pane-header">
+          <div>
+            <h2 id="product-form-title">إضافة منتج جديد للمحل</h2>
+            <p>أضف صورة المنتج والاسم والسعر، وسيظهر فوراً لجميع الزبائن على الهاتف والكمبيوتر.</p>
+          </div>
+        </div>
+
+        <div class="form-container-card">
+          <form id="add-product-form">
+            <input type="hidden" id="prod-edit-id" value="">
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="prod-name-ar">اسم المنتج بالعربي <span class="req">*</span></label>
+                <input type="text" id="prod-name-ar" required placeholder="مثال: هودي أسود قطن أوفر سايز">
+              </div>
+
+              <div class="form-group">
+                <label for="prod-name-en">اسم المنتج بالإنجليزي (اختياري)</label>
+                <input type="text" id="prod-name-en" placeholder="e.g. Black Oversized Cotton Hoodie">
+              </div>
+            </div>
+
+            <div class="form-row-3">
+              <div class="form-group">
+                <label for="prod-category">قسم المنتج <span class="req">*</span></label>
+                <select id="prod-category" required>
+                  <option value="hoodies">🧥 هودي (Hoodies)</option>
+                  <option value="pants">👖 بناطيل (Pants)</option>
+                  <option value="shirts">👔 قمصان (Shirts)</option>
+                  <option value="tshirts">👕 تيشيرتات (T-Shirts)</option>
+                  <option value="jackets">🧥 جواكت (Jackets)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="prod-price">السعر الحالي (ج.م) <span class="req">*</span></label>
+                <input type="number" id="prod-price" required min="1" step="0.5" placeholder="مثال: 450">
+              </div>
+
+              <div class="form-group">
+                <label for="prod-old-price">السعر قبل الخصم (اختياري)</label>
+                <input type="number" id="prod-old-price" min="1" step="0.5" placeholder="مثال: 550">
+              </div>
+            </div>
+
+            <!-- Image Upload Section (Direct File/Camera Upload Only) -->
+            <div class="form-group image-upload-box">
+              <label>صورة المنتج <span class="req">*</span></label>
+              <input type="hidden" id="prod-image-url" value="">
+              <div class="upload-options-grid">
+                <!-- File Upload -->
+                <div class="upload-dropzone" id="prod-upload-zone">
+                  <input type="file" id="prod-file-input" accept="image/*">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <span>اضغط هنا لاختيار صورة المنتج من جهازك أو الكاميرا</span>
+                  <small>JPG, PNG, WEBP (حجم حتى 15 ميجابايت)</small>
+                </div>
+
+                <!-- Preview Area -->
+                <div class="upload-preview-box">
+                  <img id="prod-img-preview" src="" alt="معاينة الصورة" style="display: none;">
+                  <div id="prod-img-placeholder" class="img-placeholder">
+                    <i class="fa-regular fa-image"></i>
+                    <span>معاينة الصورة</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sizes Selection -->
+            <div class="form-group">
+              <label>المقاسات المتاحة لهذا المنتج</label>
+              <div class="sizes-checkbox-group">
+                <label class="size-check-item"><input type="checkbox" name="prod-size" value="S"> S</label>
+                <label class="size-check-item"><input type="checkbox" name="prod-size" value="M" checked> M</label>
+                <label class="size-check-item"><input type="checkbox" name="prod-size" value="L" checked> L</label>
+                <label class="size-check-item"><input type="checkbox" name="prod-size" value="XL" checked> XL</label>
+                <label class="size-check-item"><input type="checkbox" name="prod-size" value="XXL" checked> XXL</label>
+                <label class="size-check-item"><input type="checkbox" name="prod-size" value="3XL"> 3XL</label>
+                <label class="size-check-item"><input type="checkbox" name="prod-size" value="30"> 30</label>
+                <label class="size-check-item"><input type="checkbox" name="prod-size" value="32"> 32</label>
+                <label class="size-check-item"><input type="checkbox" name="prod-size" value="34"> 34</label>
+                <label class="size-check-item"><input type="checkbox" name="prod-size" value="36"> 36</label>
+                <label class="size-check-item"><input type="checkbox" name="prod-size" value="Free Size"> فري سايز</label>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="prod-desc-ar">وصف المنتج وخامة القماش (عربي)</label>
+                <textarea id="prod-desc-ar" rows="3" placeholder="قطن ميلتون ثقيل معالج ضد الانكماش..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="prod-desc-en">الوصف بالإنجليزي (اختياري)</label>
+                <textarea id="prod-desc-en" rows="3" placeholder="Heavyweight cotton fleece, ultra soft..."></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" id="save-product-btn" class="btn btn-primary btn-lg">
+                <i class="fa-solid fa-cloud-arrow-up"></i> حفظ ونشر المنتج الآن
+              </button>
+              <button type="button" id="cancel-edit-btn" class="btn btn-outline-dark" style="display: none;">
+                إلغاء التعديل
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 4: SETTINGS ==================== -->
+      <section id="tab-settings" class="admin-tab-pane">
+        <div class="pane-header">
+          <div>
+            <h2>إعدادات المحل والهوية</h2>
+            <p>تغيير اسم المحل، اللوجو، أرقام التواصل والواتساب، ورمز المرور السري.</p>
+          </div>
+        </div>
+
+        <div class="form-container-card">
+          <form id="settings-form">
+            <!-- Store Names -->
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="set-name-ar">اسم المحل (عربي) <span class="req">*</span></label>
+                <input type="text" id="set-name-ar" required placeholder="مثال: بوتيك مودرن فاشون">
+              </div>
+
+              <div class="form-group">
+                <label for="set-name-en">اسم المحل (إنجليزي) <span class="req">*</span></label>
+                <input type="text" id="set-name-en" required placeholder="e.g. Modern Fashion Boutique">
+              </div>
+            </div>
+
+            <!-- Slogan -->
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="set-slogan-ar">شعار / وصف المحل (عربي)</label>
+                <input type="text" id="set-slogan-ar" placeholder="أحدث صيحات الملابس الرجالية والشبابية">
+              </div>
+
+              <div class="form-group">
+                <label for="set-slogan-en">الشعار بالإنجليزي</label>
+                <input type="text" id="set-slogan-en" placeholder="Premium modern streetwear collection">
+              </div>
+            </div>
+
+            <!-- Logo Upload & Change (Direct File Upload Only) -->
+            <div class="form-group logo-setting-box">
+              <label>لوجو المحل (شعار المتجر)</label>
+              <input type="hidden" id="set-logo-url" value="">
+              <div class="logo-preview-row">
+                <div class="logo-display-circle">
+                  <img id="set-logo-preview" src="" alt="Logo Preview" style="display: none;">
+                  <i class="fa-solid fa-shirt" id="set-logo-fallback"></i>
+                </div>
+                <div class="logo-inputs">
+                  <div class="upload-btn-wrapper">
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('logo-file-input').click()">
+                      <i class="fa-solid fa-cloud-arrow-up"></i> رفع لوجو جديد من الجهاز أو الموبايل
+                    </button>
+                    <input type="file" id="logo-file-input" accept="image/*" style="display: none;">
+                  </div>
+                  <small class="form-hint">اضغط على الزر لاختيار صورة اللوجو من جهازك أو الكاميرا</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Numbers -->
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="set-whatsapp">رقم الواتساب لاستلام الأوردرات <span class="req">*</span></label>
+                <input type="text" id="set-whatsapp" required placeholder="201012345678" dir="ltr" style="text-align: right;">
+                <small class="form-hint">اكتب الرقم بكود الدولة (مثال: 201012345678 لمصر)</small>
+              </div>
+
+              <div class="form-group">
+                <label for="set-phone">رقم الهاتف الظاهر للعملاء</label>
+                <input type="text" id="set-phone" placeholder="01012345678" dir="ltr" style="text-align: right;">
+              </div>
+            </div>
+
+            <!-- Currency & Delivery Note -->
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="set-currency-ar">رمز العملة (عربي)</label>
+                <input type="text" id="set-currency-ar" value="ج.م">
+              </div>
+
+              <div class="form-group">
+                <label for="set-currency-en">رمز العملة (إنجليزي)</label>
+                <input type="text" id="set-currency-en" value="EGP">
+              </div>
+            </div>
+
+            <!-- Change PIN -->
+            <div class="form-group pin-change-box">
+              <label for="set-admin-pin"><i class="fa-solid fa-key"></i> تغيير رمز المرور السري للوحة التحكم</label>
+              <input type="password" id="set-admin-pin" placeholder="اتركه فارغاً إذا كنت لا ترغب بتغييره">
+              <small class="form-hint">الرمز الافتراضي الحالي هو admin123</small>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" id="save-settings-btn" class="btn btn-primary btn-lg">
+                <i class="fa-solid fa-floppy-disk"></i> حفظ وتحديث الإعدادات
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Delete Product Confirmation Modal -->
+  <div id="delete-modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-overlay" onclick="closeDeleteModal()"></div>
+    <div class="modal-card modal-confirm">
+      <div class="confirm-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <h3>هل أنت متأكد من حذف هذا المنتج؟</h3>
+      <p id="delete-product-name" class="confirm-text">اسم المنتج</p>
+      <div class="modal-actions-row">
+        <button id="confirm-delete-btn" class="btn btn-danger">نعم، احذف المنتج فوراً</button>
+        <button class="btn btn-outline-dark" onclick="closeDeleteModal()">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deliver Order Confirmation Modal -->
+  <div id="deliver-modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-overlay" onclick="closeDeliverModal()"></div>
+    <div class="modal-card modal-confirm">
+      <div class="confirm-icon text-green"><i class="fa-solid fa-circle-check"></i></div>
+      <h3>تسليم الأوردر وإزالته</h3>
+      <p id="deliver-order-info" class="confirm-text">أوردر رقم ORD-1001</p>
+      <p class="sub-text">سيتم إزالة الطلب فوراً من قائمة الطلبات النشطة.</p>
+      <div class="modal-actions-row">
+        <button id="confirm-deliver-btn" class="btn btn-success">
+          <i class="fa-solid fa-check"></i> نعم، تم التسليم
+        </button>
+        <button class="btn btn-outline-dark" onclick="closeDeliverModal()">تراجع</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="admin-toast-container" class="admin-toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

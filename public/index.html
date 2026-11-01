@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title id="site-title">بوتيك مودرن فاشون | Modern Fashion Store</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-announcement">
+    <div class="container top-bar-content">
+      <span id="announcement-text">
+        <i class="fa-solid fa-truck-fast"></i> التوصيل متاح لجميع المحافظات والدفع عند الاستلام
+      </span>
+      <div class="top-bar-actions">
+        <!-- Language Switcher Button -->
+        <button id="lang-toggle-btn" class="lang-btn" title="تغيير اللغة / Change Language">
+          <i class="fa-solid fa-globe"></i>
+          <span id="lang-btn-text">English</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="main-header">
+    <div class="container header-content">
+      <!-- Store Branding (Logo + Name) -->
+      <a href="/" class="store-brand" id="brand-link">
+        <div class="logo-box" id="brand-logo-container">
+          <i class="fa-solid fa-shirt brand-icon-fallback" id="brand-icon-fallback"></i>
+          <img id="brand-logo-img" src="" alt="Store Logo" style="display: none;">
+        </div>
+        <div class="brand-text">
+          <h1 id="brand-name">بوتيك مودرن فاشون</h1>
+          <p id="brand-slogan">أحدث صيحات الملابس الرجالية والشبابية</p>
+        </div>
+      </a>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Direct WhatsApp contact -->
+        <a id="header-whatsapp-btn" href="#" target="_blank" class="contact-btn-header" title="تواصل عبر واتساب">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span class="btn-text-desktop" data-i18n="contactUs">تواصل معنا</span>
+        </a>
+
+        <!-- Cart Button -->
+        <button id="open-cart-btn" class="cart-btn" aria-label="سلة التسوق">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-label btn-text-desktop" data-i18n="cart">السلة</span>
+          <span id="cart-count-badge" class="cart-badge">0</span>
+        </button>
+
+        <!-- Admin Shortcut -->
+        <a href="/admin" class="admin-link-btn" title="لوحة التحكم">
+          <i class="fa-solid fa-user-shield"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <span class="hero-badge" data-i18n="newCollection">🔥 كولكشن الموسم الجديد</span>
+        <h2 id="hero-title" class="hero-heading">أفضل جودة بأحدث ستايل تريند</h2>
+        <p id="hero-subtitle" class="hero-subtext">تشكيلة حصرية من الهوديز، البناطيل، التيشيرتات، القمصان والجواكت بجودة قطن ممتازة وسعر مميز.</p>
+        <div class="hero-buttons">
+          <a href="#categories-nav" class="btn btn-primary" data-i18n="shopNow">
+            <i class="fa-solid fa-arrow-down"></i> تسوق الآن
+          </a>
+          <a id="hero-wa-btn" href="#" target="_blank" class="btn btn-outline" data-i18n="orderOnWhatsapp">
+            <i class="fa-brands fa-whatsapp"></i> اطلب عبر واتساب
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Store Content -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- Categories Filter Tabs (هودي، بناطيل، قميص، تيشرت، جواكت، كلهم) -->
+      <nav id="categories-nav" class="categories-nav" aria-label="فئات المنتجات">
+        <div class="categories-wrapper">
+          <button class="cat-pill active" data-category="all">
+            <i class="fa-solid fa-fire"></i>
+            <span data-i18n="catAll">الكل</span>
+          </button>
+          <button class="cat-pill" data-category="hoodies">
+            <i class="fa-solid fa-vest-patches"></i>
+            <span data-i18n="catHoodies">هودي</span>
+          </button>
+          <button class="cat-pill" data-category="pants">
+            <i class="fa-solid fa-socks"></i>
+            <span data-i18n="catPants">بناطيل</span>
+          </button>
+          <button class="cat-pill" data-category="shirts">
+            <i class="fa-solid fa-user-tie"></i>
+            <span data-i18n="catShirts">قمصان</span>
+          </button>
+          <button class="cat-pill" data-category="tshirts">
+            <i class="fa-solid fa-shirt"></i>
+            <span data-i18n="catTshirts">تيشيرتات</span>
+          </button>
+          <button class="cat-pill" data-category="jackets">
+            <i class="fa-solid fa-mitten"></i>
+            <span data-i18n="catJackets">جواكت</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Search and Count Bar -->
+      <div class="products-toolbar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="search-input" placeholder="ابحث عن منتج بالاسم..." data-i18n-placeholder="searchPlaceholder">
+          <button id="clear-search-btn" class="clear-search" style="display: none;">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="products-count">
+          <span id="products-count-number">0</span> <span data-i18n="productsFound">منتج متاح</span>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="products-grid" class="products-grid">
+        <!-- Products cards rendered here via JavaScript -->
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p data-i18n="loading">جاري تحميل المنتجات...</p>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <i class="fa-solid fa-box-open"></i>
+        <h3 data-i18n="noProducts">لا توجد منتجات في هذا القسم حالياً</h3>
+        <p data-i18n="tryAnotherCat">جرب اختيار فئة أخرى أو ابحث باسم مختلف</p>
+        <button id="reset-filter-btn" class="btn btn-secondary" data-i18n="showAll">عرض كل المنتجات</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Product Details / Size Selection Modal -->
+  <div id="product-modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-card">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="إغلاق">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-grid">
+        <div class="modal-image-col">
+          <img id="modal-product-img" src="" alt="Product">
+        </div>
+        <div class="modal-info-col">
+          <span id="modal-product-category" class="cat-tag">هودي</span>
+          <h2 id="modal-product-title">اسم المنتج</h2>
+          <div class="price-row">
+            <span id="modal-product-price" class="current-price">0 ج.م</span>
+            <span id="modal-product-old-price" class="old-price" style="display: none;">0 ج.م</span>
+            <span id="modal-product-discount" class="discount-badge" style="display: none;">خصم 20%</span>
+          </div>
+
+          <p id="modal-product-desc" class="modal-desc">وصف المنتج وخامة القماش</p>
+
+          <!-- Size Selection -->
+          <div class="sizes-section">
+            <label class="section-label">
+              <span data-i18n="selectSize">اختر المقاس:</span>
+              <span id="selected-size-label" class="selected-size-indicator">M</span>
+            </label>
+            <div id="modal-sizes-list" class="sizes-list">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Quantity Selector -->
+          <div class="qty-section">
+            <label class="section-label" data-i18n="quantity">الكمية:</label>
+            <div class="qty-control">
+              <button id="qty-minus-btn" class="qty-btn" aria-label="إنقاص">-</button>
+              <span id="modal-qty-value" class="qty-val">1</span>
+              <button id="qty-plus-btn" class="qty-btn" aria-label="زيادة">+</button>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="modal-actions">
+            <button id="modal-add-cart-btn" class="btn btn-primary btn-block">
+              <i class="fa-solid fa-cart-plus"></i> <span data-i18n="addToCart">إضافة إلى السلة</span>
+            </button>
+            <button id="modal-buy-now-btn" class="btn btn-success btn-block">
+              <i class="fa-solid fa-bolt"></i> <span data-i18n="buyNow">شراء فوري</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shopping Cart Drawer (سلة المشتريات) -->
+  <div id="cart-drawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-drawer-overlay" id="cart-drawer-overlay"></div>
+    <div class="cart-drawer-panel">
+      <!-- Drawer Header -->
+      <div class="cart-header">
+        <div class="cart-title">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <h3 data-i18n="cartTitle">سلة المشتريات</h3>
+          <span id="cart-header-count" class="cart-chip">0</span>
+        </div>
+        <button id="close-cart-btn" class="cart-close-btn" aria-label="إغلاق السلة">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Cart Items List -->
+      <div id="cart-items-container" class="cart-items-container">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Empty Cart Message -->
+      <div id="cart-empty-message" class="cart-empty-state" style="display: none;">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <h4 data-i18n="cartEmpty">سلتك فارغة حالياً</h4>
+        <p data-i18n="cartEmptyDesc">أضف بعض المنتجات المميزة واستمتع بالشياكة!</p>
+        <button id="continue-shopping-btn" class="btn btn-outline" data-i18n="continueShopping">تصفح المنتجات</button>
+      </div>
+
+      <!-- Cart Footer / Summary & Checkout -->
+      <div id="cart-footer" class="cart-footer">
+        <div class="cart-summary-line">
+          <span data-i18n="subtotal">إجمالي المنتجات:</span>
+          <span id="cart-subtotal-price" class="summary-price">0 ج.م</span>
+        </div>
+        <div class="cart-summary-line">
+          <span data-i18n="shipping">الشحن:</span>
+          <span id="cart-shipping-note" class="shipping-tag" data-i18n="codAvailable">الدفع عند الاستلام</span>
+        </div>
+        <div class="cart-summary-line total-line">
+          <span data-i18n="total">الإجمالي الكلي:</span>
+          <span id="cart-total-price" class="total-price">0 ج.م</span>
+        </div>
+
+        <button id="proceed-checkout-btn" class="btn btn-primary btn-block btn-checkout">
+          <i class="fa-solid fa-check"></i> <span data-i18n="proceedToCheckout">إتمام الطلب الآن</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal (بيانات العميل لتأكيد الطلب) -->
+  <div id="checkout-modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-overlay" id="checkout-modal-overlay"></div>
+    <div class="modal-card checkout-card">
+      <button class="modal-close-btn" id="checkout-close-btn" aria-label="إغلاق">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="checkout-header">
+        <div class="checkout-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+        <h2 data-i18n="completeOrderTitle">بيانات استلام الأوردر</h2>
+        <p data-i18n="completeOrderSub">يرجى كتابة بياناتك بدقة لتوصيل الأوردر بأسرع وقت</p>
+      </div>
+
+      <!-- Checkout Form -->
+      <form id="checkout-form" class="checkout-form">
+        <div class="form-group">
+          <label for="cust-name">
+            <i class="fa-solid fa-user"></i> <span data-i18n="fullName">الاسم بالكامل</span> <span class="req">*</span>
+          </label>
+          <input type="text" id="cust-name" required placeholder="مثال: أحمد محمد علي" data-i18n-placeholder="namePlaceholder">
+        </div>
+
+        <div class="form-group">
+          <label for="cust-phone">
+            <i class="fa-solid fa-phone"></i> <span data-i18n="phoneNumber">رقم الهاتف / الموبايل</span> <span class="req">*</span>
+          </label>
+          <input type="tel" id="cust-phone" required placeholder="مثال: 01012345678" dir="ltr" style="text-align: right;">
+          <small class="form-hint" data-i18n="phoneHint">سنتصل بك لتأكيد ميعاد التوصيل</small>
+        </div>
+
+        <div class="form-group">
+          <label for="cust-address">
+            <i class="fa-solid fa-location-dot"></i> <span data-i18n="address">العنوان بالتفصيل</span> <span class="req">*</span>
+          </label>
+          <textarea id="cust-address" required rows="2" placeholder="المحافظة - المنطقة - اسم الشارع - رقم العمارة والشقة" data-i18n-placeholder="addressPlaceholder"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="cust-notes">
+            <i class="fa-solid fa-comment-dots"></i> <span data-i18n="orderNotes">ملاحظات إضافية (اختياري)</span>
+          </label>
+          <input type="text" id="cust-notes" placeholder="ميعاد الاستلام المفضل، أو أي ملاحظات للمندوب" data-i18n-placeholder="notesPlaceholder">
+        </div>
+
+        <!-- Order Total Preview -->
+        <div class="checkout-total-box">
+          <span data-i18n="finalTotal">المبلغ المطلوب عند الاستلام:</span>
+          <strong id="checkout-total-display">0 ج.م</strong>
+        </div>
+
+        <button type="submit" id="submit-order-btn" class="btn btn-primary btn-block btn-lg">
+          <i class="fa-solid fa-check-circle"></i> <span data-i18n="confirmOrderNow">تأكيد الأوردر الآن</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Order Success Modal -->
+  <div id="success-modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-overlay" id="success-modal-overlay"></div>
+    <div class="modal-card success-card">
+      <div class="success-animation">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h2 data-i18n="orderSuccessTitle">تم تسجيل طلبك بنجاح! 🎉</h2>
+      <p data-i18n="orderSuccessSub">شكراً لثقتك بنا، سنقوم بتجهيز أوردرك والتواصل معك فوراً.</p>
+      
+      <div class="order-id-box">
+        <span data-i18n="orderNumber">رقم الأوردر:</span>
+        <strong id="success-order-id">ORD-1001</strong>
+      </div>
+
+      <div class="success-actions">
+        <!-- Direct WhatsApp button to notify shop owner -->
+        <a id="success-whatsapp-btn" href="#" target="_blank" class="btn btn-whatsapp btn-block">
+          <i class="fa-brands fa-whatsapp"></i> <span data-i18n="sendOrderToWhatsapp">متابعة الأوردر على واتساب المحل</span>
+        </a>
+        <button id="success-done-btn" class="btn btn-outline btn-block" data-i18n="done">تم، العودة للمتجر</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp & Contact Buttons (Always on screen for easy communication) -->
+  <div class="floating-contact">
+    <a id="floating-whatsapp-btn" href="#" target="_blank" class="fab-wa" title="تواصل عبر واتساب" aria-label="تواصل عبر واتساب">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-content">
+      <div class="footer-col">
+        <h4 id="footer-brand-name">بوتيك مودرن فاشون</h4>
+        <p id="footer-slogan">ملابس عصرية شبابية بجودة عالية وأسعار تنافسية.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="categories">الأقسام</h4>
+        <ul class="footer-links">
+          <li><a href="#categories-nav" data-category="hoodies">🧥 هودي</a></li>
+          <li><a href="#categories-nav" data-category="pants">👖 بناطيل</a></li>
+          <li><a href="#categories-nav" data-category="shirts">👔 قمصان</a></li>
+          <li><a href="#categories-nav" data-category="tshirts">👕 تيشيرتات</a></li>
+          <li><a href="#categories-nav" data-category="jackets">🧥 جواكت</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="customerCare">خدمة العملاء</h4>
+        <p><i class="fa-solid fa-phone"></i> <span id="footer-phone">01012345678</span></p>
+        <p><i class="fa-solid fa-truck"></i> <span data-i18n="codBadge">الدفع عند الاستلام بعد المعاينة</span></p>
+        <div class="footer-admin-link">
+          <a href="/admin"><i class="fa-solid fa-lock"></i> <span data-i18n="adminLogin">لوحة تحكم صاحب المحل</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="current-year">2026</span> <span id="footer-copy-store">بوتيك مودرن فاشون</span>. <span data-i18n="allRightsReserved">جميع الحقوق محفوظة</span>.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="/app.js"></script>
+</body>
+</html>
